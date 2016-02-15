@@ -2,11 +2,13 @@ import matplotlib.pyplot as pyplot
 import random
 
 class Player:
+    pid = -1	
     skill = -1.0
     rank = -1
-    def __init__(this, newskill, newrank):
-        skill = newskill
-        rank = newrank
+    def __init__(self, newpid, newskill, newrank):
+        self.pid = newpid
+        self.skill = newskill
+        self.rank = newrank
 
 def playerMatch(playerA, playerB):
     if playerA.skill >= playerB.skill:
@@ -18,21 +20,19 @@ def generatePlayers(numPlayers):
     players = []
     for i in range(0, numPlayers):
         skill = random.uniform(0, 10)
-        players.append(Player(skill, -1))
+        player = Player(i, skill, -1)
+        players.append(player)
     return players
 
 def nextRound(players):
-    if len(players) == 1:
-        return players
-    nextGen = []
-    for player in players:
-        nextGen.append(playerMatch(player, random.choice(players)))
-    return nextGen
+    pass
 
 def runSimulation(numPlayers, generations):
+
     players = generatePlayers(numPlayers)
+
     for i in range(0, generations):
-        players = nextRound(players)
+        nextRound(players)
     for player in players:
         print player.skill
 
