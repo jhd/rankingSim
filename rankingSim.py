@@ -27,9 +27,10 @@ def generatePlayers(numPlayers):
 
 def nextRound(players):
     for playerA, playerB in list(itertools.combinations(players, 2)):
-        if playerA.skill > playerB.skill:
+        variance = random.uniform(-1, 1)
+        if playerA.skill > playerB.skill + variance:
             playerA.rank += 1
-        elif playerB.skill > playerA.skill:
+        elif playerB.skill + variance > playerA.skill:
             playerB.rank += 1
 
 def runSimulation(numPlayers, generations):
