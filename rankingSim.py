@@ -36,11 +36,26 @@ def nextRound(players):
 def runSimulation(numPlayers, generations):
 
     players = generatePlayers(numPlayers)
+    
+    rankHistory = []
 
     for i in range(0, generations):
+        for player in players:
+            rankHistory.append((i, player.pid, player.rank))
         nextRound(players)
-
     for player in players:
-        print player.pid, player.skill, player.rank
+        rankHistory.append((generations, player.pid, player.rank))
+    
+    for i in range(0, numPlayers):
+        history = []
+        for (rounds, pid, rank) in rankHistory:
+            if i == pid:
+                history.append((rounds, rank))
+        pyplot.plot(range(0, generations+1), history, 's-')
+            
+    pyplot.show()
 
-runSimulation(10, 10)
+    #for player in players:
+    #    print player.pid, player.skill, player.rank
+
+runSimulation(10, 5)
