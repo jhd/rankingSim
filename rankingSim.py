@@ -11,6 +11,17 @@ class Player:
         self.skill = newskill
         self.rank = newrank
 
+def pickPair(players, method, playerA = None):
+    if method == 'random':
+        return itertools.combinations(players, 2)
+    if method == 'similar':
+        if playerA == None:
+            pass
+        else:
+            return min(players, key = lambda x: (abs(x.rank - playerA.rank)) if x.pid != playerA.pid else float('inf'))
+    else: 
+        return (None, None)
+
 def playerMatch(playerA, playerB):
     if playerA.skill >= playerB.skill:
         return playerA
@@ -52,6 +63,7 @@ def runSimulation(numPlayers, generations):
         for player in players:
             rankHistory.append((i, player.pid, player.rank))
         nextRound(players)
+
     for player in players:
         rankHistory.append((generations, player.pid, player.rank))
     
@@ -62,8 +74,8 @@ def runSimulation(numPlayers, generations):
                 history.append(rank)
         pyplot.plot(range(0, generations+1), history, 's-', label = str(player.skill))
            
-    pyplot.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=-5)
-    pyplot.show()
+    pyplot.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=-1)
+    #pyplot.show()
 
     #for player in players:
     #    print player.pid, player.skill, player.rank
